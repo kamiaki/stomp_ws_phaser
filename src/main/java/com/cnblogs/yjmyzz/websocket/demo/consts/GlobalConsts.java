@@ -24,4 +24,11 @@ public class GlobalConsts {
     public static final String main_send_url = "/main_send_url";
     //发送 子地址1
     public static final String send_url1 = "/send_url1";
+
+
+    //    phaser
+    public static final String receive_player_info = "/receive_player_info";
+    public static final String send_player_info = "/send_player_info";
+
+
 }

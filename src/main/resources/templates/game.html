@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>game</title>
+    <script th:src="@{/js/phaser.min.js}"></script>
+    <script th:src="@{/js/phaserJS.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+    <script>
+        var ws_basePath = 'ws://' + '[[${#httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]]';
+        var http_basePath = '[[${#httpServletRequest.getScheme()}]]' + '://' + '[[${#httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]]';
+        var sprite1 = '[[@{/res/sprite1.png}]]';
+        var myWebSocket = new MyWebSocket();
+
+        var objMsg = {
+            name:'name',
+            direction:'up'
+        }
+
+        $(function () {
+            myWebSocket.receiveMsg = function(data){
+                console.info(data.body)
+            }
+            myWebSocket.connect();
+        });
+
+
+        var game = new Phaser.Game(200, 200, Phaser.CANVAS, 'div_phaser');
+
+        //按下键动 抬起不动
+        var state1 = function () {
+            this.sprite;
+            this.upKey;
+            this.downKey;
+            this.leftKey;
+            this.rightKey;
+            this.speed = 2;
+
+            this.init = function () {
+                game.stage.setBackgroundColor(0xfffff1);	//设置舞台颜色
+            };
+            this.preload = function () {
+                game.load.spritesheet('sprite', sprite1);	//加载精灵图
+            };
+            this.create = function () {
+                //创建精灵
+                this.sprite = game.add.sprite(10, 10, 'sprite');
+                //按键
+                this.upKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+                this.downKey = game.input.keyboard.addKey(Phaser.Keyboard.S);
+                this.leftKey = game.input.keyboard.addKey(Phaser.Keyboard.A);
+                this.rightKey = game.input.keyboard.addKey(Phaser.Keyboard.D);
+            };
+            this.update = function () {
+                if (this.upKey.isDown) {
+                    this.sprite.y -= this.speed;
+                    objMsg.direction = 'up';
+                    myWebSocket.sendMsg(objMsg);
+                } else if (this.downKey.isDown) {
+                    this.sprite.y += this.speed;
+                    objMsg.direction = 'down';
+                    myWebSocket.sendMsg(objMsg);
+                }
+                if (this.leftKey.isDown) {
+                    this.sprite.x -= this.speed;
+                    objMsg.direction = 'left';
+                    myWebSocket.sendMsg(objMsg);
+                } else if (this.rightKey.isDown) {
+                    objMsg.direction = 'right';
+                    myWebSocket.sendMsg(objMsg);
+                    this.sprite.x += this.speed;
+                }
+            };
+        }
+        game.state.add('state1', state1);
+        game.state.start('state1');
+    </script>
+</head>
+<body>
+<div id="div_phaser"></div>
+</body>
+</html>

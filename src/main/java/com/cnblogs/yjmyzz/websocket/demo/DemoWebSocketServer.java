@@ -1,5 +1,7 @@
 package com.cnblogs.yjmyzz.websocket.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -13,8 +15,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling    //定时任务
 public class DemoWebSocketServer {
+    static Logger logger = LoggerFactory.getLogger(DemoWebSocketServer.class);
 
     public static void main(String[] args) {
         SpringApplication.run(DemoWebSocketServer.class, args);
+        logger.info("----------------------");
+        logger.info("项目启动");
+        logger.info("----------------------");
     }
 }

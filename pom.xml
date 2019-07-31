@@ -26,6 +26,11 @@
 
     <dependencies>
         <!--核心依赖项-->
+        <!--thymeleaf-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <!--监控-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

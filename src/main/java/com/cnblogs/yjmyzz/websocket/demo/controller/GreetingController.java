@@ -2,6 +2,7 @@ package com.cnblogs.yjmyzz.websocket.demo.controller;
 
 import com.cnblogs.yjmyzz.websocket.demo.consts.GlobalConsts;
 import com.cnblogs.yjmyzz.websocket.demo.model.ClientMessage;
+import com.cnblogs.yjmyzz.websocket.demo.model.PlayerInfoMsg;
 import com.cnblogs.yjmyzz.websocket.demo.model.ServerMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -9,6 +10,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.HtmlUtils;
 
 import java.text.DateFormat;
@@ -26,6 +28,14 @@ import java.util.Date;
 public class GreetingController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+
+    @MessageMapping(GlobalConsts.send_player_info)
+    @SendTo(GlobalConsts.main_receive_url + GlobalConsts.receive_player_info)
+    public PlayerInfoMsg playerInfo(PlayerInfoMsg message) throws Exception {
+        System.out.println(message);
+        return message;
+    }
+
 
     @MessageMapping(GlobalConsts.send_url1)
     @SendTo(GlobalConsts.main_receive_url + GlobalConsts.receive_url1)

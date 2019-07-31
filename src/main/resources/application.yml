@@ -1,0 +1,7 @@
+server:
+  port: 80
+  servlet:
+    context-path: /ws
+spring:
+  thymeleaf:
+    cache: false
