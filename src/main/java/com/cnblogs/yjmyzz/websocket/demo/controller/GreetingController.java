@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,18 @@ public class GreetingController {
         Thread.sleep(1000);
         return new ServerMessage("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
+
+//    “/topic/greetings”会被UserDestinationMessageHandler转化成”/user/role1/topic/greetings”,
+//    role1是用户的登录帐号，这样子就把消息唯一的推送到请求者的订阅路径中去，
+//    这时候，如果一个帐号打开了多个浏览器窗口，
+//    也就是打开了多个websocket session通道，这时，spring webscoket默认会把消息推送到同一个帐号不同的session，
+//    你可以利用broadcast = false把避免推送到所有的session中
+//    版权声明：本文为博主原创文章，转载请附上博文链接！
+//    @MessageMapping("handle")
+//    @SendToUser(value = "/topic/greetings",broadcast = false)
+//    public String handle(String msg) {
+//        return "";
+//    }
 
     /**
      * 最基本的服务器端主动推送消息给前端
