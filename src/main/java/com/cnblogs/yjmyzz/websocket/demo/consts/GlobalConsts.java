@@ -1,34 +1,13 @@
 package com.cnblogs.yjmyzz.websocket.demo.consts;
 
-/**
- * Created with IntelliJ IDEA.
- * Description:
- *
- * @author junmingyang
- * @date 2018/9/24 8:25 PM
- */
 public class GlobalConsts {
-    //连接 websocket 地址
-    public static final String connect_sw_url = "/connect_sw_url";
+    //连接//订阅//发送
+    public static final String connect = "/connect";
+    public static final String subM = "/subM";
+    public static final String mappingM = "/mappingM";
 
-    //订阅 接收 主地址
-    public static final String main_receive_url = "/main_receive_url";
-    //订阅 接收 子地址1
-    public static final String receive_url1 = "/receive_url1";
-    public static final String receive_url2 = "/receive_url2";
-    public static final String userTestUrl = "/userTestUrl";
-    public static final String userTestName = "userTestName";
-    public static final String userUrl = "/userUrl";
-
-    //发送 主地址
-    public static final String main_send_url = "/main_send_url";
-    //发送 子地址1
-    public static final String send_url1 = "/send_url1";
-
-
-    //    phaser
-    public static final String receive_player_info = "/receive_player_info";
-    public static final String send_player_info = "/send_player_info";
-
+    //子地址
+    public static final String sub1 = "/sub1";
+    public static final String mapping1 = "/mapping1";
 
 }

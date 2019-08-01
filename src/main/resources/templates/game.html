@@ -4,32 +4,41 @@
     <meta charset="UTF-8">
     <title>game</title>
     <script th:src="@{/js/phaser.min.js}"></script>
-    <script th:src="@{/js/phaserJS.js}"></script>
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
     <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+    <!--参数-->
     <script>
-        var ws_basePath = 'ws://' + '[[${#httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]]';
-        var http_basePath = '[[${#httpServletRequest.getScheme()}]]' + '://' + '[[${#httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]]';
-        var sprite1 = '[[@{/res/sprite1.png}]]';
-        var myWebSocket = new MyWebSocket();
+        //sys
+        var sys_scheme = '[[${#httpServletRequest.getScheme()}]]';
+        var sys_serverName = '[[${#httpServletRequest.getServerName()}]]';
+        var sys_serverPort = '[[${#httpServletRequest.getServerPort()}]]';
+        var sys_contextPath = '[[${#httpServletRequest.getContextPath()}]]';
+        var ws_basePath = 'ws://' + sys_serverName + ":" + sys_serverPort + sys_contextPath;
+        var http_basePath = sys_scheme + '://' + sys_serverName + ":" + sys_serverPort + sys_contextPath;
+        //ws
+        var connect = sys_contextPath + '[[${connect}]]';
+        var subM = '[[${subM}]]';
+        var mappingM = '[[${mappingM}]]';
+        var sub1 = '[[${sub1}]]';
+        var mapping1 = '[[${mapping1}]]';
+        //phaser
+        var sprite1_url = '[[@{/res/sprite1.png}]]';
+    </script>
+    <script th:src="@{/js/websocketSTOMP.js}"></script>
+    <script th:src="@{/js/object.js}"></script>
+    <script th:src="@{/js/state1.js}"></script>
 
-        var objMsg = {
-            name:'name',
-            direction:'up'
+    <script>
+        var myWebSocket = new MyWebSocket();
+        var game = new Phaser.Game(200, 200, Phaser.CANVAS, 'div_phaser');
+        var playerMap = {};
+
+        var addSprite = function (playerId) {
+            this.sprite = game.add.sprite(10, 10, 'sprite');
+            playerMap.put
         }
 
-        $(function () {
-            myWebSocket.receiveMsg = function(data){
-                console.info(data.body)
-            }
-            myWebSocket.connect();
-        });
-
-
-        var game = new Phaser.Game(200, 200, Phaser.CANVAS, 'div_phaser');
-
-        //按下键动 抬起不动
         var state1 = function () {
             this.sprite;
             this.upKey;
@@ -42,7 +51,7 @@
                 game.stage.setBackgroundColor(0xfffff1);	//设置舞台颜色
             };
             this.preload = function () {
-                game.load.spritesheet('sprite', sprite1);	//加载精灵图
+                game.load.spritesheet('sprite', sprite1_url);	//加载精灵图
             };
             this.create = function () {
                 //创建精灵
@@ -74,8 +83,19 @@
                 }
             };
         }
+
         game.state.add('state1', state1);
         game.state.start('state1');
+
+        //接收方法
+        var receiveFunc = function (data) {
+            console.info(data.body);
+        }
+
+        $(function () {
+            myWebSocket.receiveMsg = receiveFunc;
+            myWebSocket.connect();
+        });
     </script>
 </head>
 <body>
