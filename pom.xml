@@ -8,6 +8,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <!--tomcat-->
+    <!--<packaging>war</packaging>-->
+
     <name>websocket-demo</name>
     <description>Websocket Demo project for Spring Boot</description>
 
@@ -22,9 +25,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
+
+        <!--tomcat-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
+
         <!--核心依赖项-->
         <!--thymeleaf-->
         <dependency>
