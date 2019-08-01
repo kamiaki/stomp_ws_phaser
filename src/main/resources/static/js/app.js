@@ -1,6 +1,6 @@
 var stompClient = null;
 //连接 websocket 地址
-var connect_sw_url = "/connect_sw_url";
+var connect_sw_url = "/ws/connect_sw_url";
 //订阅 接收 主地址
 var main_receive_url = "/main_receive_url";
 //订阅 接收 子地址1
